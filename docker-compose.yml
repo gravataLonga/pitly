@@ -1,0 +1,47 @@
+version: "2"
+services:
+  web:
+    container_name: pitly.apache
+    image: gravatalonga/docker-apache2laravel
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/opt/application
+    links:
+      - php
+
+  php:
+    container_name: pitly.php
+    image: gravatalonga/docker-php7.0
+    ports:
+      - "9001:9001"
+      - "22:22"
+    volumes:
+      - ./:/opt/application
+    links:
+      - db
+      - redis
+      - mailhog
+
+  db:
+    container_name: pitly.maria
+    image: mariadb
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./.database:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=control
+
+  redis:
+    container_name: pitly.redis
+    image: redis
+    ports:
+      - "6379:6379"
+
+  mailhog:
+    container_name: pitly.mailhog
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
