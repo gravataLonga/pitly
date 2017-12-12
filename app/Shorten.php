@@ -16,4 +16,9 @@ class Shorten extends Model
             $model->token = str_random(6);
         });
     }
+
+    public function stats()
+    {
+        return $this->hasMany(Stat::class);
+    }
 }
