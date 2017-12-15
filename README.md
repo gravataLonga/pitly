@@ -1,8 +1,7 @@
 # pitly
 Related to bitly but is better. (https://jonathan.pt) . 
 
-![Pitly](./pitly.png)
-<img src="./pitly.png">
+<img src="./pitly-01.png">
 
 ## Install
 
