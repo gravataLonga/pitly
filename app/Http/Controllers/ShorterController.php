@@ -26,6 +26,6 @@ class ShorterController extends Controller
             return $fractal->createData($resource)->toJson();
         }
         
-        return redirect()->route('shorter.index');
+        return redirect()->route('home')->withSuccess('Url encurtado com sucesso');
     }
 }
