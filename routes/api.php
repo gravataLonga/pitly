@@ -17,4 +17,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/shorten/stats/{token}', 'StatController@index');
+Route::get('/shorten/stats/{token}', 'StatController@index')->name('api.stats');
+Route::post('/shorten', 'ShorterController@store')->name('api.shorten');
