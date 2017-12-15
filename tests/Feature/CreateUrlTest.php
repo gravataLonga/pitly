@@ -16,7 +16,7 @@ class CreateUrlTest extends TestCase
     {
         $url = 'http://www.google.pt';
         $this->post('shorter', ['url' => $url])
-            ->assertRedirect('shorter');
+            ->assertRedirect('/');
 
         $this->assertDatabaseHas('shortens', [
             'url' => $url
