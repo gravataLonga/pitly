@@ -15,6 +15,13 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+window.events = new Vue();
+
+window.flash = function (message, level = 'success') {
+    window.events.$emit('flash', { message, level });
+}
+
+Vue.component('flash', require('./components/FlashComponent.vue'));
 Vue.component('shorten-component', require('./components/ShortenComponent.vue'));
 
 const app = new Vue({

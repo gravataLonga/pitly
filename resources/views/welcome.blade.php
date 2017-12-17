@@ -16,8 +16,9 @@
                 </div>
             </div>
             <shorten-component></shorten-component>
+            <flash message="{{ session('flash') }}"></flash>
         </div>
-
+        
         <script src="{{ asset('js/app.js') }}"></script>
     </body>
 </html>

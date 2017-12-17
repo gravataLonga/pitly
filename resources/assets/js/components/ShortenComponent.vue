@@ -35,6 +35,12 @@
                 }).then(r => {
                     this.shortens.push(r.data.data);
                     this.url = ''
+                    flash('Your url was shorten!');
+                }).catch(error => {
+                    if (error.response) {
+                        // Server reponde with error.
+                        if (error.response.status == 422) {}
+                    }
                 });
             }
         }
