@@ -39,7 +39,7 @@
                 }).catch(error => {
                     if (error.response) {
                         // Server reponde with error.
-                        if (error.response.status == 422) {}
+                        if (error.response.status == 422) { flash("Enter a valid url, please")}
                     }
                 });
             }
