@@ -13,7 +13,8 @@ class ShortenTransform extends TransformerAbstract
             'id'        => $shorten->id,
             'shorted'   => route('redirect.index', ['token' => $shorten->token]),
             'token'     => $shorten->token,
-            'original'  => $shorten->url
+            'original'  => $shorten->url,
+            'hit'       => $shorten->stats_count
         ];
     }
 }

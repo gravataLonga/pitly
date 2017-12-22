@@ -14,7 +14,7 @@ class ShorterController extends Controller
 {
     public function index(Request $request)
     {
-        $paginator = Shorten::paginate(10);
+        $paginator = Shorten::withCount('stats')->paginate(10);
         $shorten = $paginator->getCollection();
         $fractal = new Manager();
         $resource = new Collection($shorten, new ShortenTransform, 'shorten');
