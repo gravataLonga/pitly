@@ -25,4 +25,23 @@ class ApiTest extends TestCase
                 ]
             ]);
     }
+
+    /** @test */
+    public function get_shortens_with_paginations()
+    {
+        $this->getJson('api/shorten')
+            ->assertJsonStructure([
+                'data',
+                'meta' => [
+                    'pagination' => [
+                        'total',
+                        'count',
+                        'per_page',
+                        'current_page',
+                        'total_pages',
+                        'links'
+                    ]
+                ]
+            ]);
+    }
 }

@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('shorter', 'ShorterController@index')->name('shorter.index');
 Route::post('shorter', 'ShorterController@store')->name('shorter.store');

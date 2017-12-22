@@ -1,7 +1,7 @@
 <template>
     <div 
         class="text-center py-4 lg:px-4 fixed pin-r pin-b"
-        :class="'bg-indigo-'+level" 
+        :class="level" 
         v-show="show"
         >
       <div class="p-2 bg-indigo-darker items-center text-indigo-lightest leading-none lg:rounded-full flex lg:inline-flex" role="alert">

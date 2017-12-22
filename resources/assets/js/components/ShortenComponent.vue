@@ -11,10 +11,24 @@
                 <button @click="create" type="submit" class="hover:text-pitly-dark hover:bg-white rounded text-white shadow px-2 py-2 bg-pitly-dark text-base font-sans">Corta</button>
             </div>
         </div>
-        <div class="flex mt-8">
-            <div class="w-1/4 rounded shadow bg-white border-2 border-pitly-dark px-2 py-4" v-for="item in shortens">
-                <h4><a class="text-pitly-dark font-sans" v-bind:href="item.shorted">{{ item.token }}</a></h4>
-                <p class="mt-2 color-sm text-grey font-sans">{{item.original}}</p>
+        <div class="flex mt-8 flex-wrap">
+            <div class="w-1/4" v-for="item in shortens">
+                <div class="m-2 rounded shadow bg-white border-2 border-pitly-dark px-2 py-4">
+                    <h4 class="mb-2">
+                        <a class="text-pitly-dark font-sans" v-bind:href="item.original">
+                            {{item.shorted}}
+                        </a>
+                    </h4>
+                    <span class="inline-block bg-grey-lighter rounded-full px-3 py-1 text-xs font-semibold text-grey-darker mr-2">{{ item.token }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="flex justify-between mt-8 mb-8">
+            <div v-on:click="prevPage" v-show="prev" class="border rounded shadow px-4 py-2 bg-white" :href="prev">
+                Prev
+            </div>
+            <div v-on:click="nextPage" v-show="next" class="border rounded shadow px-4 py-2 bg-white" :href="next">
+                Next
             </div>
         </div>
     </div>  
@@ -25,8 +39,13 @@
         data() {
             return {
                 url: '',
-                shortens: []
+                shortens: [],
+                next: false,
+                prev: false
             }
+        },
+        created() {
+            this.fetch();
         },
         methods: {
             create() {
@@ -42,6 +61,19 @@
                         if (error.response.status == 422) { flash("Enter a valid url, please")}
                     }
                 });
+            },
+            fetch(url = null) {
+                axios.get(url ? url : 'api/shorten').then(r => {
+                    this.shortens = r.data.data;
+                    this.next = r.data.meta.pagination.links.next;
+                    this.prev = r.data.meta.pagination.links.previous;
+                });
+            },
+            nextPage() {
+                this.fetch(this.next);
+            },
+            prevPage() {
+                this.fetch(this.prev);
             }
         }
     }
