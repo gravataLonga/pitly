@@ -15,18 +15,36 @@
                     
                 </div>
                 <div class="w-1/3">
-                    <img src="{{ asset('images/pitly.png') }}" alt="Pitly" class="p-4">
+                    <a href="{{ route('home') }}"><img src="{{ asset('images/pitly.png') }}" alt="Pitly" class="p-4"></a>
                 </div>
                 <div class="w-1/3">
                     <div class="flex justify-end">
-                        <a class="bg-white text-center text-black px-4 py-2 rounded-l no-underline font-sans border-l border-t border-b hover:bg-grey-lightest" href="{{ route('login') }}">Login</a>
-                        <a class="bg-white text-center text-black px-4 py-2 rounded-r no-underline font-sans border hover:bg-grey-lightest" href="{{ route('register') }}">Register</a>
+                        @guest
+                            <a class="bg-white text-center text-black px-4 py-2 rounded-l no-underline font-sans border-l border-t border-b hover:bg-grey-lightest" href="{{ route('login') }}">Login</a>
+                            <a class="bg-white text-center text-black px-4 py-2 rounded-r no-underline font-sans border hover:bg-grey-lightest" href="{{ route('register') }}">Register</a>
+                        @endguest
+
+                        @auth
+                            <a class="bg-white text-center text-black px-4 py-2 rounded no-underline font-sans border hover:bg-grey-lightest" href="#">{{ auth()->user()->name }}</a>
+                        @endauth
                     </div>
                 </div>
             </div>
         </div>
         
         <div id="shorten-app">
+            <div class="container mx-auto">
+                <div class="flex justify-center">
+                    @foreach($errors->all() as $message)
+                        <div class="w-1/3">
+                            <div class="bg-red-lightest border border-red-light text-red-dark px-4 py-3 rounded relative" role="alert">
+                              <strong class="font-bold">Holy smokes!</strong>
+                              <span class="block sm:inline">{{ $message }}</span>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
             @yield('content')
             <flash message="{{ session('flash') }}"></flash>
         </div>

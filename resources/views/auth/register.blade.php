@@ -1,76 +1,38 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Register</div>
+<div class="container mx-auto">
+    <div class="flex justify-center">
+        <div class="w-1/2 border p-2 rounded">
+            <form class="form-horizontal" method="POST" action="{{ route('register') }}">
+                {{ csrf_field() }}
 
-                <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('register') }}">
-                        {{ csrf_field() }}
-
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Name</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
-
-                                @if ($errors->has('name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Register
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                <div class="flex mb-2">
+                    <label for="name" class="bg-white rounded-l border-t border-l border-b font-sans text-base py-2 px-2 w-1/3 text-right">name</label>
+                    <input id="name" type="text" class="px-2 py-2 border rounded-r w-2/3" name="name" value="{{ old('name') }}" required autofocus>
                 </div>
-            </div>
+
+                <div class="flex mb-2">
+                    <label for="email" class="bg-white rounded-l border-t border-l border-b font-sans text-base py-2 px-2 w-1/3 text-right">e-mail</label>
+                    <input id="email" type="email" class="px-2 py-2 border rounded-r w-2/3" name="email" value="{{ old('email') }}" required>
+                </div>
+
+                <div class="flex mb-2">
+                    <label for="password" class="bg-white rounded-l border-t border-l border-b font-sans text-base py-2 px-2 w-1/3 text-right">password</label>
+                    <input id="password" type="password" class="px-2 py-2 border rounded-r w-2/3" name="password" required>
+                </div>
+
+                <div class="flex mb-2">
+                    <label for="password-confirm" class="bg-white rounded-l border-t border-l border-b font-sans text-base py-2 px-2 w-1/3 text-right">confirm</label>
+                    <input id="password-confirm" type="password" class="px-2 py-2 border rounded-r w-2/3" name="password_confirmation" required>
+                </div>
+
+                <div class="flex justify-center">
+                    <button type="submit" class="bg-white text-center text-black px-4 py-2 rounded no-underline font-sans border hover:bg-grey-lightest text-xs">
+                        Register
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
