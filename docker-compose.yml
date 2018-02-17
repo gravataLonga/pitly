@@ -2,22 +2,22 @@ version: "2"
 services:
   web:
     container_name: pitly.apache
-    image: gravatalonga/docker-apache2laravel
+    image: gravatalonga/docker-apache2laravel:latest
     ports:
       - "80:80"
     volumes:
-      - ./:/opt/application
+      - ./:/var/www
     links:
       - php
 
   php:
     container_name: pitly.php
-    image: gravatalonga/docker-php7.0
+    image: gravatalonga/docker-php7.0:latest
     ports:
       - "9001:9001"
       - "22:22"
     volumes:
-      - ./:/opt/application
+      - ./:/var/www
     links:
       - db
       - redis

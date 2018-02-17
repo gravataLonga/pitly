@@ -32,7 +32,7 @@
             </div>
         </div>
         
-        <div id="shorten-app">
+        <div>
             <div class="container mx-auto">
                 <div class="flex justify-center">
                     @foreach($errors->all() as $message)

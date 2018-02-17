@@ -44,4 +44,13 @@ class ApiTest extends TestCase
                 ]
             ]);
     }
+
+    /** @test */
+    public function can_retrive_stats_by_token ()
+    {
+        $shorten = factory(Shorten::class)->create();
+        $stats = factory(Stat::class, 10)->create(['shorten_id' => $shorten->id]);
+        $response = $this->getJson("api/shorten/stats/{$shorten->token}");
+        $this->assertCount(10, $response->json());
+    }
 }
