@@ -16,6 +16,7 @@ class CreatePlansTable extends Migration
         Schema::create('plans', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('key'); // Key is the name of plan.
             $table->unsignedInteger('amount')->default(0);
             $table->text('description')->nullable();
             $table->string('image')->nullable();

@@ -17,7 +17,9 @@ Route::get('shorter', 'ShorterController@index')->name('shorter.index');
 Route::post('shorter', 'ShorterController@store')->name('shorter.store');
 Route::get('s/{token}', 'RedirectController@index')->name('redirect.index');
 
-Route::get('/plans', 'PlanController@index')->name('plan.index');
+Route::get('/plans', 'PlanController@index')
+    ->name('plan.index')
+    ->middleware('auth');
 Route::post('/purchase/{plan}', 'PurchaseController@store')->name('purchase.store');
 
 Route::post(

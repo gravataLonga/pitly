@@ -5,6 +5,8 @@ namespace Tests\Feature;
 use App\Plan;
 use App\User;
 use Tests\TestCase;
+use App\Billing\PaymentGateway;
+use App\Billing\FakePaymentGateway;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -15,7 +17,8 @@ class CanPurchasePlansTest extends TestCase
     /** @test */
     public function can_see_plans_on_plans_page ()
     {
-        $plans = factory(Plan::class, 3)->create();
+        $this->login();
+        $plans = create(Plan::class, [], 3);
 
         $response = $this->get('/plans');
 
@@ -27,11 +30,11 @@ class CanPurchasePlansTest extends TestCase
     /** @test */
     public function show_correct_amount_to_price()
     {
-        $plans = factory(Plan::class, 1)->create(['amount' => 1230]);
+        $this->login();
+        create(Plan::class, ['amount' => 1230]);
 
-        $response = $this->get('/plans');
-
-        $response->assertSee('12,30€');
+        $this->get('/plans')
+            ->assertSee('12,30€');
     }
 
     /** @test */
@@ -39,18 +42,24 @@ class CanPurchasePlansTest extends TestCase
     {
         $plans = factory(Plan::class, 1)->create();
 
-        $response = $this->get('/plans');
-        $response->assertDontSee('data-purchase-button');
+        $this->get('/plans')
+            ->assertDontSee('data-purchase-button')
+            ->assertStatus(302);
     }
 
     /** @test */
-    public function authenticated_user_can_see_purchase_button ()
+    public function purchase_plan ()
     {
-        $user = factory(User::class)->create();
-        $this->actingAs($user);
-        $plans = factory(Plan::class, 1)->create();
+        $this->login();
+        $this->withoutExceptionHandling();
+        $paymentGateway = new FakePaymentGateway;
+        $this->app->instance(PaymentGateway::class, $paymentGateway);
+        $plan = create(Plan::class, ['amount' => 1500]);
 
-        $response = $this->get('/plans');
-        $response->assertSee('data-purchase-button');
+        $response = $this->post("/purchase/{$plan->id}", [
+            'token' => $paymentGateway->getValidTestToken()
+        ]);
+
+        $this->assertEquals(1500, $paymentGateway->totalCharges());
     }
 }

@@ -2,14 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Plan;
 use Illuminate\Http\Request;
+use App\Billing\PaymentGateway;
 
 class PurchaseController extends Controller
 {
-    public function store(Request $request, $plan)
+    protected $paymentGateway;
+
+    public function __construct(PaymentGateway $paymentGateway)
     {
-        $user = auth()->user();
-        $user->newSubscription('main', 'basic')->create($request->input('stripeToken'));
-        return redirect(route('home'))->withSuccess('O seu plano foi actualizado');
+        $this->paymentGateway = $paymentGateway;
+    }
+
+    public function store(Request $request, $plan)
+    { 
+        $plan = Plan::find($plan);
+        $this->paymentGateway->charge($plan->amount, $request->input('token'));
     }
 }
