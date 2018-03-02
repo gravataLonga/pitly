@@ -15,7 +15,8 @@ class ApiTest extends TestCase
     /** @test */
     public function can_shorten_url_by_api ()
     {
-        $this->postJson('api/shorten', ['url' => 'https://www.google.pt'])
+        $this->withoutExceptionHandling();
+        $response = $this->postJson('api/shorten', ['url' => 'https://www.google.pt'])
             ->assertJsonStructure([
                 'data' => [
                     'id', 
@@ -29,6 +30,7 @@ class ApiTest extends TestCase
     /** @test */
     public function get_shortens_with_paginations()
     {
+        $this->withoutExceptionHandling();
         $this->getJson('api/shorten')
             ->assertJsonStructure([
                 'data',

@@ -17,7 +17,8 @@ class PurchaseController extends Controller
 
     public function store(Request $request, $plan)
     { 
-        $plan = Plan::find($plan);
-        $this->paymentGateway->charge($plan->amount, $request->input('token'));
+        tap(Plan::find($plan), function ($plan) use ($request) {
+            $this->paymentGateway->charge($plan->amount, $request->input('token'));
+        });
     }
 }

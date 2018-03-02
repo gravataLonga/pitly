@@ -11,8 +11,8 @@ class RedirectController extends Controller
 {
     public function index($token)
     {
-        $shorten = Shorten::whereToken($token)->first();
-        $shorten->stats()->create(['hit_at' => Carbon::now()]);
-        return redirect($shorten->url);
+        return redirect(tap(Shorten::whereToken($token)->first(), function ($shorten) {
+            $shorten->stats()->create(['hit_at' => Carbon::now()]);
+        })->url);
     }
 }
