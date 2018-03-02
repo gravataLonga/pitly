@@ -15,8 +15,7 @@ class ApiTest extends TestCase
     /** @test */
     public function can_shorten_url_by_api ()
     {
-        $this->withoutExceptionHandling();
-        $response = $this->postJson('api/shorten', ['url' => 'https://www.google.pt'])
+        $this->postJson('api/shorten', ['url' => 'https://www.google.pt'])
             ->assertJsonStructure([
                 'data' => [
                     'id', 
@@ -30,7 +29,6 @@ class ApiTest extends TestCase
     /** @test */
     public function get_shortens_with_paginations()
     {
-        $this->withoutExceptionHandling();
         $this->getJson('api/shorten')
             ->assertJsonStructure([
                 'data',
@@ -50,9 +48,14 @@ class ApiTest extends TestCase
     /** @test */
     public function can_retrive_stats_by_token ()
     {
-        $shorten = factory(Shorten::class)->create();
-        $stats = factory(Stat::class, 10)->create(['shorten_id' => $shorten->id]);
-        $response = $this->getJson("api/shorten/stats/{$shorten->token}");
-        $this->assertCount(10, $response->json());
+        $shorten = tap(factory(Shorten::class)->create(), function ($shorten) {
+            factory(Stat::class, 10)->create(['shorten_id' => $shorten->id]);
+        });
+
+        tap(
+            $this->getJson("api/shorten/stats/{$shorten->token}"), 
+            function ($response) {
+                $this->assertCount(10, $response->json());
+        });
     }
 }
