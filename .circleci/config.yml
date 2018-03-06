@@ -18,8 +18,8 @@ jobs:
 
     steps:
       - checkout
-      - run: sudo apt install -y libsqlite3-dev zlib1g-dev
-      - run: sudo docker-php-ext-install zip gd mcrypt
+      - run: sudo apt install -y libsqlite3-dev zlib1g-dev libpng-dev
+      - run: sudo docker-php-ext-install zip gd mcrypt mbstring
       - run: sudo composer self-update
 
       # Download and cache dependencies
