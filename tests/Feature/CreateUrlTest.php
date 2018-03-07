@@ -11,11 +11,16 @@ class CreateUrlTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function shortenUrl($params)
+    {
+        return $this->post('shorter', $params);
+    }
+
     /** @test */
     public function can_submit_url ()
     {
         $url = 'http://www.google.pt';
-        $this->post('shorter', ['url' => $url])
+        $this->shortenUrl(['url' => $url])
             ->assertRedirect('/');
 
         $this->assertDatabaseHas('shortens', [
@@ -26,9 +31,7 @@ class CreateUrlTest extends TestCase
     /** @test */
     public function after_created_can_access_shorten_url()
     {
-        $shorten = factory(Shorten::class)->create([
-            'url' => 'http://www.google.pt'
-        ]);
+        $shorten = create(Shorten::class, ['url' => 'http://www.google.pt']);
         $this->get("s/{$shorten->token}")
             ->assertRedirect('http://www.google.pt');
     }
@@ -36,7 +39,7 @@ class CreateUrlTest extends TestCase
     /** @test */
     public function when_submit_the_url_must_be_valid ()
     {
-        $this->post('shorter', ['url' => 'not-valid-url'])
+        $this->shortenUrl(['url' => 'not-valid-url'])
             ->assertSessionHasErrors();
 
         $this->assertDatabaseMissing('shortens', [

@@ -13,9 +13,7 @@ class FakePaymentGatewayTest extends TestCase
     public function charge_payment_with_valid_token ()
     {
         $paymentGateway = new FakePaymentGateway;
-
         $paymentGateway->charge(2500, $paymentGateway->getValidTestToken());
-
         $this->assertEquals(2500, $paymentGateway->totalCharges());
     }
 }

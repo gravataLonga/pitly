@@ -22,7 +22,7 @@ class CanPurchasePlansTest extends TestCase
 
         $response = $this->get('/plans');
 
-        $plans->fresh()->each(function($model) use ($response) {
+        $plans->each(function($model) use ($response) {
             $response->assertSee($model->name);
         });
     }
@@ -40,7 +40,7 @@ class CanPurchasePlansTest extends TestCase
     /** @test */
     public function only_authenticate_user_can_purchase_plans ()
     {
-        $plans = factory(Plan::class, 1)->create();
+        create(Plan::class);
 
         $this->get('/plans')
             ->assertDontSee('data-purchase-button')
@@ -51,7 +51,6 @@ class CanPurchasePlansTest extends TestCase
     public function purchase_plan ()
     {
         $this->login();
-        $this->withoutExceptionHandling();
         $paymentGateway = new FakePaymentGateway;
         $this->app->instance(PaymentGateway::class, $paymentGateway);
         $plan = create(Plan::class, ['amount' => 1500]);
@@ -62,4 +61,5 @@ class CanPurchasePlansTest extends TestCase
 
         $this->assertEquals(1500, $paymentGateway->totalCharges());
     }
+
 }
