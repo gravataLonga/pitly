@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/php:7.1.5-browsers
+      - image: circleci/php:7.1-node-browsers
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -18,6 +18,9 @@ jobs:
 
     steps:
       - checkout
+      - run: sudo apt install -y libsqlite3-dev zlib1g-dev libpng-dev libmcrypt-dev libreadline-dev
+      - run: sudo docker-php-ext-install zip gd mcrypt mbstring
+      - run: sudo composer self-update
 
       # Download and cache dependencies
       - restore_cache:
@@ -32,6 +35,8 @@ jobs:
           paths:
             - ./vendor
           key: v1-dependencies-{{ checksum "composer.json" }}
+      - run: cp .env.example .env
+      - run: php artisan key:generate
         
       # run tests!
-      - run: phpunit
+      - run: ./vendor/bin/phpunit
