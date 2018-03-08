@@ -32,6 +32,13 @@
                         Register
                     </button>
                 </div>
+
+                <hr class="mt-4">
+                <h3 class="text-center">Ou</h3>
+                <hr class="mt-4">
+                <div class="text-center mb-4">
+                    <a href="{{ route('login.provider.index') }}" class="bg-white text-center text-black px-4 py-2 no-underline font-sans border hover:bg-grey-lightest text-xs">Registe-se com Github</a>
+                </div>
             </form>
         </div>
     </div>

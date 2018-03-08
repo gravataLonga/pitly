@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mx-auto">
     <div class="flex justify-center">
-        <div class="w-1/4 border p-2 rounded">
+        <div class="w-1/4 border p-2 rounded bg-grey-lightest">
             <form class="form-horizontal" method="POST" action="{{ route('login') }}">
                 {{ csrf_field() }}
                 <div class="mb-2 flex">
@@ -19,13 +19,19 @@
                     </label>
                 </div>
                 <div class="flex justify-center">
-                    <button type="submit" class="bg-white text-center text-black px-4 py-2 rounded-l no-underline font-sans border-l border-t border-b hover:bg-grey-lightest text-xs">
+                    <button type="submit" class="bg-pitly text-center text-black px-4 py-2 rounded-l no-underline font-sans border-l border-t border-b hover:bg-grey-lightest text-xs">
                         Login
                     </button>
 
                     <a class="bg-white text-center text-black px-4 py-2 rounded-r no-underline font-sans border hover:bg-grey-lightest text-xs" href="{{ route('password.request') }}">
                         Forgot Your Password?
                     </a>
+                </div>
+                <hr class="mt-4">
+                <h3 class="text-center">Ou</h3>
+                <hr class="mt-4">
+                <div class="text-center mb-4">
+                    <a href="{{ route('login.provider.index') }}" class="bg-white text-center text-black px-4 py-2 no-underline font-sans border hover:bg-grey-lightest text-xs">Entrar com Github</a>
                 </div>
             </form>
         </div>
