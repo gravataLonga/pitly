@@ -1,7 +1,8 @@
 # Pitly
 Related to bitly but is better. (https://jonathan.pt).  
   
-<img src="https://circleci.com/gh/gravataLonga/pitly.png?style=shield&circle-token=00e214dfd5e7bbf601df6dbe05fac392bd40f9e4">    
+<img src="https://circleci.com/gh/gravataLonga/pitly.png?style=shield&circle-token=00e214dfd5e7bbf601df6dbe05fac392bd40f9e4"> 
+<img src="https://travis-ci.org/gravataLonga/pitly.svg?branch=master">  
 
 <img src="./pitly-01.png">
 
