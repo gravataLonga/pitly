@@ -34,15 +34,13 @@ class ApiResponse
     protected function boot($results = null)
     {
         $model = $this->getModel();
-        $fractal = new Manager();
         if ($this->rows) {
-            $paginator = $results->getCollection();
             $resource = new Collection($results, $this->resolve($model), $model);
             $resource->setPaginator(new IlluminatePaginatorAdapter($results));
         } else {
             $resource = new Item($results, $this->resolve($model), $model);
         }
-        return $fractal->createData($resource);
+        return (new Manager())->createData($resource);
     }
 
     protected function getResults()
