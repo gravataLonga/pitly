@@ -22,6 +22,7 @@ window.flash = function (message, level = 'success') {
 }
 
 Vue.component('flash', require('./components/FlashComponent.vue'));
+Vue.component('form-shorten-component', require('./components/FormShortenComponent.vue'));
 Vue.component('shorten-component', require('./components/ShortenComponent.vue'));
 
 const app = new Vue({

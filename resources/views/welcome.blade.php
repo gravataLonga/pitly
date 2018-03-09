@@ -2,6 +2,6 @@
 
 @section('content')
     <div class="container mx-auto">
-        <shorten-component></shorten-component>
+        <shorten-component url="api/shorten"></shorten-component>
     </div>
 @endsection
