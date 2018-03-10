@@ -5,5 +5,5 @@ function create($model, $attributes = [], $times = null) {
 }
 
 function make($model, $attributes = [], $times = null) {
-    return factory($model, $times)->create($attributes);
+    return factory($model, $times)->make($attributes);
 }

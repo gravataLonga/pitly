@@ -8,6 +8,11 @@ class Shorten extends Model
 {
     protected $guarded = [];
 
+    protected $dates = [
+        'created_at',
+        'updated_at'
+    ];
+
     public static function boot()
     {
         parent::boot();
@@ -20,5 +25,10 @@ class Shorten extends Model
     public function stats()
     {
         return $this->hasMany(Stat::class);
+    }
+
+    public function getCreatedAttribute()
+    {
+        return $this->created_at->format('j F, Y');
     }
 }

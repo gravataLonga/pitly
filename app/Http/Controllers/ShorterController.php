@@ -8,7 +8,10 @@ use gravatalonga\ApiResponse;
 
 class ShorterController extends Controller
 {
-    public function index(Request $request)
+    /**
+     * Listing Shorten Url
+     */
+    public function index()
     {
         return (new ApiResponse(
             Shorten::withCount('stats'),
@@ -16,7 +19,13 @@ class ShorterController extends Controller
         ))->fractal()->toJson();
     }
 
-    public function store(Request $request)
+    public function show($token)
+    {
+        $shorten = Shorten::where('token', $token)->first();
+        return view('pages.shorten.show', compact('shorten'));
+    }
+
+    public function store()
     {
         $this->validate(request(), [
             'url' => ['required', 'url']
@@ -24,7 +33,7 @@ class ShorterController extends Controller
 
         $shorten = Shorten::create(request(['url']));
 
-        if ($request->expectsJson()) {
+        if (request()->expectsJson()) {
             return (new ApiResponse(
                 $shorten,
                 null

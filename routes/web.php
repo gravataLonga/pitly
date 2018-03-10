@@ -14,6 +14,7 @@
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('shorter', 'ShorterController@index')->name('shorter.index');
+Route::get('shorter/{token}/detail', 'ShorterController@show')->name('shorter.show');
 Route::post('shorter', 'ShorterController@store')->name('shorter.store');
 Route::get('s/{token}', 'RedirectController@index')->name('redirect.index');
 

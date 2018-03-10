@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Shorten;
+use Carbon\Carbon;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -19,12 +20,11 @@ class CreateUrlTest extends TestCase
     /** @test */
     public function can_submit_url ()
     {
-        $url = 'http://www.google.pt';
-        $this->shortenUrl(['url' => $url])
+        $this->shortenUrl(['url' => 'http://www.google.pt'])
             ->assertRedirect('/');
 
         $this->assertDatabaseHas('shortens', [
-            'url' => $url
+            'url' => 'http://www.google.pt'
         ]);
     }
 
@@ -45,5 +45,18 @@ class CreateUrlTest extends TestCase
         $this->assertDatabaseMissing('shortens', [
             'url' => 'not-valid-url'
         ]);
+    }
+
+    /** @test */
+    public function has_details ()
+    {
+        $this->withoutExceptionHandling();
+        $shorten = create(Shorten::class, ['url' => 'http://www.google.pt', 'created_at' => Carbon::parse('2018-03-04 00:00:00')]);
+
+        $this->get("shorter/{$shorten->token}/detail")
+            ->assertSuccessful()
+            ->assertSee('http://www.google.pt')
+            ->assertSee($shorten->token)
+            ->assertSeeText('4 March, 2018');
     }
 }
